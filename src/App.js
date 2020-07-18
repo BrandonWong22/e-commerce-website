@@ -1,11 +1,9 @@
 import React from "react";
 import "./App.css";
 import HomePage from "./pages/HomePage/HomePage";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import Shop from "./pages/Shop/Shop";
 
-const Hats = () => {
-  return <div>Hats</div>;
-};
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 function App() {
   return (
@@ -13,7 +11,7 @@ function App() {
       <BrowserRouter>
         <Switch>
           <Route exact path="/" component={HomePage} />
-          <Route path="/hats" component={Hats} />
+          <Route path="/shop" component={Shop} />
         </Switch>
       </BrowserRouter>
     </>
