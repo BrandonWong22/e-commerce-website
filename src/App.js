@@ -26,17 +26,12 @@ class App extends Component {
         // });
         userRef.onSnapshot((snapShot) => {
           // console.log(snapShot.data());
-          this.setState(
-            {
-              currentUser: {
-                id: snapShot.id,
-                ...snapShot.data(),
-              },
+          this.setState({
+            currentUser: {
+              id: snapShot.id,
+              ...snapShot.data(),
             },
-            () => {
-              console.log(this.state.currentUser);
-            }
-          );
+          });
         });
       }
       this.setState({
