@@ -6,7 +6,7 @@ import Header from "./components/Header/Header";
 import SignInSignOut from "./pages/SignInSignOut/SignInSignOut";
 
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import { auth } from "./firebase/firebase";
+import { auth, createUserProfileDocument } from "./firebase/firebase";
 
 // function App() {
 class App extends Component {
@@ -17,9 +17,31 @@ class App extends Component {
   unsubscribeFromAuth = null;
 
   componentDidMount() {
-    this.unsubscribeFromAuth = auth.onAuthStateChanged((user) => {
-      this.setState({ currentUser: user });
-      // console.log(user);
+    this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
+      // createUserProfileDocument(user);
+      if (userAuth) {
+        const userRef = await createUserProfileDocument(userAuth);
+        // userAuth.onSnapShot((snapShot) => {
+        //   console.log(snapShot);
+        // });
+        userRef.onSnapshot((snapShot) => {
+          // console.log(snapShot.data());
+          this.setState(
+            {
+              currentUser: {
+                id: snapShot.id,
+                ...snapShot.data(),
+              },
+            },
+            () => {
+              console.log(this.state.currentUser);
+            }
+          );
+        });
+      }
+      this.setState({
+        currentUser: userAuth,
+      });
     });
   }
 
