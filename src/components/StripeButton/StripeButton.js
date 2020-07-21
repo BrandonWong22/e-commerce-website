@@ -7,7 +7,6 @@ const StripeCheckoutButton = ({ price }) => {
     "pk_test_51H7PraGurUUPjyWt1AvRa1KCTQGZ54PW2pejOY2nacitC04Mq5y7c7Tn8hRdcy50joXcYVSvNAVab9g1106kkO5S00uXZ3zOjJ";
 
   const onToken = (token) => {
-    console.log(token);
     alert("Payment Successful");
   };
 
