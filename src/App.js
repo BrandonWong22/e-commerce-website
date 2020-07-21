@@ -4,6 +4,7 @@ import HomePage from "./pages/HomePage/HomePage";
 import Shop from "./pages/Shop/Shop";
 import Header from "./components/Header/Header";
 import SignInSignOut from "./pages/SignInSignOut/SignInSignOut";
+import Checkout from "./pages/Checkout/Checkout";
 
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import { auth, createUserProfileDocument } from "./firebase/firebase";
@@ -14,12 +15,7 @@ import { setCurrentUser } from "./redux/user/UserActions";
 import { createStructuredSelector } from "reselect";
 import { selectCurrentUser } from "./redux/user/UserSelectors";
 
-// function App() {
 class App extends Component {
-  // state = {
-  //   currentUser: null,
-  // };
-
   unsubscribeFromAuth = null;
 
   componentDidMount() {
@@ -29,21 +25,12 @@ class App extends Component {
       // createUserProfileDocument(user);
       if (userAuth) {
         const userRef = await createUserProfileDocument(userAuth);
-        // userAuth.onSnapShot((snapShot) => {
-        //   console.log(snapShot);
-        // });
+
         userRef.onSnapshot((snapShot) => {
-          // console.log(snapShot.data());
           setCurrentUser({
             id: snapShot.id,
             ...snapShot.data(),
           });
-          // this.setState({
-          //   currentUser: {
-          //     id: snapShot.id,
-          //     ...snapShot.data(),
-          //   },
-          // });
         });
       }
       setCurrentUser(userAuth);
@@ -69,6 +56,7 @@ class App extends Component {
                 this.props.currentUser ? <Redirect to="/" /> : <SignInSignOut />
               }
             />
+            <Route exact path="/checkout" component={Checkout} />
           </Switch>
         </BrowserRouter>
       </>
